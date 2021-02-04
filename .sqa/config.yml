@@ -1,0 +1,30 @@
+# .sqa/config.yml - jenkins-pipeline-library configuration file
+config:
+  project_repos:
+    saps-dispatcher:
+      repo: 'https://github.com/EOSC-synergy/saps-dispatcher'
+      branch: develop
+    saps-common:
+      repo: 'https://github.com/EOSC-synergy/saps-common'
+      branch: develop
+    saps-catalog:
+      repo: 'https://github.com/EOSC-synergy/saps-catalog'
+      branch: develop
+
+sqa_criteria:
+   qc_style:
+     repos:
+       saps-dispatcher:
+         container: dispatcher-testing
+         commands:
+         # saps-dispatcher has saps-common and saps-catalog as dependences and must be installed
+           - mvn -f /saps-common-repo/pom.xml install
+           - mvn -f /saps-catalog-repo/pom.xml install
+           - mvn -f /saps-dispatcher-repo/pom.xml checkstyle:checkstyle
+   qc_coverage:
+     repos:
+       saps-dispatcher:
+         container: dispatcher-testing
+         commands:
+           - mvn -f /saps-dispatcher-repo/pom.xml -B -DskipTests clean package
+           - mvn -f /saps-dispatcher-repo/pom.xml test
