@@ -17,3 +17,13 @@ services:
        source: ./saps-common
        target: /saps-common-repo
     command: sleep 3600
+
+  dispatcher-docs:
+    image: "sphinxdoc/sphinx"
+    container_name: dispatcher-docs
+    hostname: dispatcher-docs
+    volumes:
+     - type: bind
+       source: ./saps-dispatcher
+       target: /saps-dispatcher-repo
+    command: sleep 3600
