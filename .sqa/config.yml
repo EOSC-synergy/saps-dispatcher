@@ -28,3 +28,11 @@ sqa_criteria:
          commands:
            - mvn -f /saps-dispatcher-repo/pom.xml -B -DskipTests clean package
            - mvn -f /saps-dispatcher-repo/pom.xml test
+
+   qc_doc:
+     repos:
+       saps-dispatcher:
+         container: dispatcher-docs
+         commands:
+           - pip install recommonmark
+           - make html -C /saps-dispatcher-repo/docs/
