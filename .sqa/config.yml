@@ -18,9 +18,9 @@ sqa_criteria:
          container: dispatcher-testing
          commands:
          # saps-dispatcher has saps-common and saps-catalog as dependences and must be installed
-           - mvn -f /saps-common-repo/pom.xml install
-           - mvn -f /saps-catalog-repo/pom.xml install
-           - mvn -f /saps-dispatcher-repo/pom.xml checkstyle:checkstyle
+           - mvn -f /saps-common-repo/pom.xml -DskipTests install
+           - mvn -f /saps-catalog-repo/pom.xml -DskipTests install
+           - mvn -f /saps-dispatcher-repo/pom.xml spotless:check
    qc_coverage:
      repos:
        saps-dispatcher:
@@ -36,3 +36,10 @@ sqa_criteria:
          commands:
            - pip install recommonmark
            - make html -C /saps-dispatcher-repo/docs/
+
+   qc_security:
+     repos:
+       saps-dispatcher:
+         container: dispatcher-testing
+         commands:
+           - mvn -f /saps-dispatcher-repo/pom.xml -B -DskipTests clean package com.github.spotbugs:spotbugs-maven-plugin:check
